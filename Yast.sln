@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{E67746C0-D7B9-44AC-A1C1-A7DE149B58D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A2E656AF-D993-43AE-B47B-45F8A528C34C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YastLib", "Source\YastLib\YastLib.csproj", "{55BE8DBB-A625-4EEB-ADAF-B33C3A60E399}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YastLib.Test", "Test\YastLib.Test\YastLib.Test.csproj", "{5EB4C7F5-7DDF-48F9-8C66-1AC6085C28E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{51E8D438-886A-4E73-AC32-B46EF1B54752}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55BE8DBB-A625-4EEB-ADAF-B33C3A60E399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55BE8DBB-A625-4EEB-ADAF-B33C3A60E399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55BE8DBB-A625-4EEB-ADAF-B33C3A60E399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55BE8DBB-A625-4EEB-ADAF-B33C3A60E399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB4C7F5-7DDF-48F9-8C66-1AC6085C28E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB4C7F5-7DDF-48F9-8C66-1AC6085C28E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB4C7F5-7DDF-48F9-8C66-1AC6085C28E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB4C7F5-7DDF-48F9-8C66-1AC6085C28E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55BE8DBB-A625-4EEB-ADAF-B33C3A60E399} = {E67746C0-D7B9-44AC-A1C1-A7DE149B58D1}
+		{5EB4C7F5-7DDF-48F9-8C66-1AC6085C28E3} = {A2E656AF-D993-43AE-B47B-45F8A528C34C}
+	EndGlobalSection
+EndGlobal
