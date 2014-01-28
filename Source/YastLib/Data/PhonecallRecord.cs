@@ -6,29 +6,44 @@ namespace YastLib.Data
 {
     public class PhonecallRecord : YastRecord
     {
-        public DateTime StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
-        public string Comment { get; set; }
-        public bool IsRunning { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool Outgoing { get; set; }
-
-        public PhonecallRecord() : base(3)
+        public DateTime StartTime
         {
+            get { return YastTime.FromSecondsSince1970(int.Parse(Variables[0])); }
+        }
+        
+        public DateTime? EndTime
+        {
+            get
+            {
+                return (!IsRunning)
+                    ? YastTime.FromSecondsSince1970(int.Parse(Variables[1]))
+                    : (DateTime?)null;
+            }
         }
 
-        protected override void ProcessRecord(XElement record)
+        public string Comment
         {
-            base.ProcessRecord(record);
+            get { return Variables[2]; }
+        }
 
-            StartTime = YastTime.FromSecondsSince1970(int.Parse(Variables[0]));
-            Comment = Variables[2];
-            IsRunning = Variables[3] == "1";
-            PhoneNumber = Variables[4];
-            Outgoing = Variables[5] == "1";
+        public bool IsRunning
+        {
+            get { return Variables[3] == "1"; }
+        }
 
-            if (!IsRunning)
-                EndTime = YastTime.FromSecondsSince1970(int.Parse(Variables[1]));
+        public string PhoneNumber
+        {
+            get { return Variables[4]; }
+        }
+
+        public bool Outgoing
+        {
+            get { return Variables[5] == "1"; }
+        }
+
+        public PhonecallRecord(XElement record)
+            : base(record)
+        {
         }
     }
 }

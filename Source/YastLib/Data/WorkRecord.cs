@@ -6,25 +6,34 @@ namespace YastLib.Data
 {
     public class WorkRecord : YastRecord
     {
-        public DateTime StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
-        public string Comment { get; set; }
-        public bool IsRunning { get; set; }
-
-        public WorkRecord() : base(1)
+        public DateTime StartTime
         {
+            get { return YastTime.FromSecondsSince1970(int.Parse(Variables[0])); }
         }
 
-        protected override void ProcessRecord(XElement record)
+        public DateTime? EndTime
         {
-            base.ProcessRecord(record);
+            get
+            {
+                return (!IsRunning)
+                    ? YastTime.FromSecondsSince1970(int.Parse(Variables[1]))
+                    : (DateTime?)null;
+            }
+        }
 
-            StartTime = YastTime.FromSecondsSince1970(int.Parse(Variables[0]));
-            Comment = Variables[2];
-            IsRunning = Variables[3] == "1";
+        public string Comment
+        {
+            get { return Variables[2]; }
+        }
 
-            if (!IsRunning)
-                EndTime = YastTime.FromSecondsSince1970(int.Parse(Variables[1]));
+        public bool IsRunning
+        {
+            get { return Variables[3] == "1"; }
+        }
+
+        public WorkRecord(XElement record)
+            : base(record)
+        {
         }
     }
 }

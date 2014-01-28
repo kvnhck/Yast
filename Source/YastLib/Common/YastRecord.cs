@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using YastLib.Data;
 
@@ -9,60 +10,68 @@ namespace YastLib.Common
     {
         private readonly XElement _record;
 
-        public int Id { get; set; }
-        public int TypeId { get; set; }
-        public DateTime TimeCreated { get; set; }
-        public DateTime TimeUpdated { get; set; }
-        public int ProjectId { get; set; }
-        public IList<string> Variables { get; set; }
-        public int CreatorId { get; set; }
-
-        public YastRecord(int typeId)
+        public int Id
         {
-            TypeId = typeId;
-            Variables = new List<string>();
+            get { return _record.GetElementValue("id", 0); }
         }
 
-        private static YastRecord GetByTypeId(int typeId)
+        public int TypeId
         {
-            switch (typeId)
-            {
-                case 1: return new WorkRecord();
-                case 3: return new PhonecallRecord();
-                default: return new YastRecord(typeId);
-            }
+            get { return _record.GetElementValue("typeId", 0); }
+        }
+
+        public DateTime TimeCreated
+        {
+            get { return YastTime.FromSecondsSince1970(_record.GetElementValue("timeCreated", 0D)); }
+        }
+
+        public DateTime TimeUpdated
+        {
+            get { return YastTime.FromSecondsSince1970(_record.GetElementValue("timeUpdated", 0D)); }
+        }
+
+        public int ProjectId
+        {
+            get { return _record.GetElementValue("project", 0); }
+        }
+
+        private IList<string> _variables;
+
+        public IList<string> Variables
+        {
+            get { return _variables ?? (_variables = GetVariables()); }
+        }
+
+        public int CreatorId
+        {
+            get { return _record.GetElementValue("creator", 0); }
+        }
+
+        protected YastRecord(XElement record)
+        {
+            _record = record;
         }
 
         public static YastRecord ConvertFrom(XElement record)
         {
             int typeId = record.GetElementValue("typeId", 0);
 
-            YastRecord result = GetByTypeId(typeId);
-            result.ProcessRecord(record);
-
-            return result;
+            switch (typeId)
+            {
+                case 1: return new WorkRecord(record);
+                case 3: return new PhonecallRecord(record);
+                default: return new YastRecord(record);
+            }
         }
 
-        protected virtual void ProcessRecord(XElement record)
+        private IList<string> GetVariables()
         {
-            Id = record.GetElementValue("id", 0);
+            var xVariables = _record.Element("variables");
+            if (xVariables == null) return new string[0];
 
-            TimeCreated = YastTime.FromSecondsSince1970(
-                record.GetElementValue("timeCreated", 0D));
-
-            TimeUpdated = YastTime.FromSecondsSince1970(
-                record.GetElementValue("timeUpdated", 0D));
-
-            ProjectId = record.GetElementValue("project", 0);
-
-            CreatorId = record.GetElementValue("creator", 0);
-
-            var xVariables = record.Element("variables");
-            if (xVariables != null)
-            {
-                foreach(var variable in xVariables.Elements("v"))
-                    Variables.Add(variable.Value);
-            }
+            return xVariables.Elements("v")
+                .Select(variable => variable.Value)
+                .ToList();
         }
     }
 }
