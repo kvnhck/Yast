@@ -76,6 +76,8 @@
   <ItemGroup>
     <Compile Include="Auth\LoginRequest.cs" />
     <Compile Include="Auth\LoginResponse.cs" />
+    <Compile Include="Common\YastFolder.cs" />
+    <Compile Include="Common\YastPrivilege.cs" />
     <Compile Include="Common\YastRecord.cs" />
     <Compile Include="Common\YastRequest.cs" />
     <Compile Include="Common\YastResponse.cs" />
