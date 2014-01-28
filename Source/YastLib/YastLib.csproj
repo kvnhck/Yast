@@ -81,6 +81,7 @@
     <Compile Include="Common\YastResponse.cs" />
     <Compile Include="Common\Status.cs" />
     <Compile Include="Common\YastTime.cs" />
+    <Compile Include="Common\XElementExtensions.cs" />
     <Compile Include="Data\GetRecordsRequest.cs" />
     <Compile Include="Data\GetRecordsResponse.cs" />
     <Compile Include="Data\PhonecallRecord.cs" />

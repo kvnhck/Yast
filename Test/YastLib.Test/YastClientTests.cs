@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using NUnit.Framework;
 using YastLib.Auth;
 using YastLib.Common;
@@ -75,6 +76,7 @@ namespace YastLib.Test
 
             Assert.IsNotNull(response);
             CollectionAssert.IsNotEmpty(response.Records);
+            Assert.IsTrue(response.Records.All(r => r.Id > 0));
         }
 
         [Test]

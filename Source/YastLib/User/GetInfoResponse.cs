@@ -8,22 +8,22 @@ namespace YastLib.User
     {
         public int Id
         {
-            get { return GetResponseElementValue("id", 0); }
+            get { return Response.GetElementValue("id", 0); }
         }
 
         public string Name
         {
-            get { return GetResponseElementValue("name", string.Empty); }
+            get { return Response.GetElementValue("name", string.Empty); }
         }
 
         public DateTime TimeCreated
         {
-            get { return YastTime.FromSecondsSince1970(GetResponseElementValue("timeCreated", 0D)); }
+            get { return YastTime.FromSecondsSince1970(Response.GetElementValue("timeCreated", 0D)); }
         }
 
         public bool ValidSubscription
         {
-            get { return GetResponseElementValue("subscription", 0) == 1; }
+            get { return Response.GetElementValue("subscription", 0) == 1; }
         }
 
         public GetInfoResponse(HttpContent content)

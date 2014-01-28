@@ -9,17 +9,17 @@ namespace YastLib.Report
     {
         public int ReportId
         {
-            get { return GetResponseElementValue("reportId", 0); }
+            get { return Response.GetElementValue("reportId", 0); }
         }
 
         public string ReportHash
         {
-            get { return GetResponseElementValue("reportHash", string.Empty); }
+            get { return Response.GetElementValue("reportHash", string.Empty); }
         }
 
         public string FileType
         {
-            get { return GetResponseElementValue("fileType", string.Empty); }
+            get { return Response.GetElementValue("fileType", string.Empty); }
         }
 
         public GetReportResponse(HttpContent content)

@@ -7,7 +7,7 @@ namespace YastLib.Auth
     {
         public string Hash
         {
-            get { return GetResponseElementValue("hash", string.Empty); }
+            get { return Response.GetElementValue("hash", string.Empty); }
         }
 
         public LoginResponse(HttpContent content)
