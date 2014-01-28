@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Text;
 using NUnit.Framework;
 using YastLib.Auth;
 using YastLib.Common;
@@ -12,7 +11,7 @@ namespace YastLib.Test
     [TestFixture]
     public class YastClientTests
     {
-        private const string _baseUri = "http://www.yast.com";
+        private const string BaseUri = "http://www.yast.com";
 
         private YastClient _yast;
         private string _user;
@@ -23,12 +22,12 @@ namespace YastLib.Test
         {
             _user = ConfigurationManager.AppSettings["Yast.User"];
             _password = ConfigurationManager.AppSettings["Yast.Password"];
-            _yast = new YastClient(_baseUri);
+            _yast = new YastClient(BaseUri);
         }
 
-        private LoginResponse Login()
+        private LoginResponse Login(int? requestId = null)
         {
-            return _yast.Login(_user, _password);
+            return _yast.Login(_user, _password, requestId);
         }
 
         [Test]
@@ -39,6 +38,14 @@ namespace YastLib.Test
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Status, Status.Success);
             Assert.IsNotEmpty(response.Hash);
+        }
+
+        [Test]
+        public void LoginWithRequestId_ShouldRespondWithTheSameRequestId()
+        {
+            var response = Login(123);
+
+            Assert.AreEqual(123, response.RequestId);
         }
 
         [Test]
@@ -54,6 +61,20 @@ namespace YastLib.Test
             Assert.IsNotEmpty(userInfo.Name);
             Assert.Greater(userInfo.TimeCreated, new DateTime(1970, 1, 1));
             Assert.Greater(userInfo.Id, 0);
+            Assert.AreEqual(false, userInfo.ValidSubscription);
+        }
+
+        [Test]
+        public void GetRecords_ShouldReturnRecords()
+        {
+            var login = Login();
+
+            var response = _yast.GetRecords(
+                _user,
+                login.Hash);
+
+            Assert.IsNotNull(response);
+            CollectionAssert.IsNotEmpty(response.Records);
         }
 
         [Test]
@@ -72,7 +93,7 @@ namespace YastLib.Test
 
             Console.WriteLine(
                 report.GetDownloadUrl(
-                    new Uri(_baseUri),
+                    new Uri(BaseUri),
                     _user,
                     login.Hash));
         }
@@ -96,7 +117,7 @@ namespace YastLib.Test
 
             Console.WriteLine(
                 report.GetDownloadUrl(
-                    new Uri(_baseUri),
+                    new Uri(BaseUri),
                     _user,
                     login.Hash));
         }

@@ -13,7 +13,7 @@ namespace YastLib.Common
 
         public static DateTime FromSecondsSince1970(double seconds)
         {
-            return new DateTime(1970, 1, 1).AddSeconds(seconds);
+            return new DateTime(1970, 1, 1).AddSeconds(seconds).ToLocalTime();
         }
     }
 }

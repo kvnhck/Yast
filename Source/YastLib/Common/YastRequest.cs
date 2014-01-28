@@ -8,7 +8,7 @@ namespace YastLib.Common
     {
         public abstract string RequestType { get; }
 
-        public int RequestId { get; set; }
+        public int? RequestId { get; set; }
 
         public string User { get; set; }
 
@@ -25,7 +25,7 @@ namespace YastLib.Common
             var xml = new XDocument(
                 new XElement("request",
                     new XAttribute("req", RequestType),
-                    new XAttribute("id", RequestId),
+                    new XAttribute("id", RequestId.GetValueOrDefault(0)),
                     new XElement("user", User),
                     new XElement("hash", Hash)));
 
