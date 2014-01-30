@@ -37,7 +37,7 @@ namespace YastLib.Test
             var response = Login();
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Status, Status.Success);
+            Assert.AreEqual(Status.Success, response.Status);
             Assert.IsNotEmpty(response.Hash);
         }
 
