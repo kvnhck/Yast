@@ -15,8 +15,8 @@ namespace YastLib.Data
         public DateTime? TimeFrom { get; set; }
         public DateTime? TimeTo { get; set; }
 
-        public GetRecordsRequest(string user, string hash)
-            : base(user, hash)
+        public GetRecordsRequest(YastAuthToken token)
+            : base(token.User, token.Hash)
         {
             TypeId = new List<int>();
             ProjectId = new List<int>();
@@ -26,6 +26,9 @@ namespace YastLib.Data
         public override XDocument ToXml()
         {
             var xml = base.ToXml();
+
+            if (xml.Root == null)
+                throw new Exception("XDocument.Root element is missing");
 
             if (TypeId.Count > 0)
                 xml.Root.Add(new XElement("typeId", string.Join(",", TypeId)));

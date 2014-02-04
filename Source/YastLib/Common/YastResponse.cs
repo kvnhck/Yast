@@ -1,4 +1,3 @@
-using System.Net.Http;
 using System.Xml.Linq;
 
 namespace YastLib.Common
@@ -17,9 +16,8 @@ namespace YastLib.Common
             get { return Response.GetAttributeValue("id", 0); }
         }
 
-        protected YastResponse(HttpContent content)
+        protected YastResponse(XContainer xdoc)
         {
-            var xdoc = XDocument.Parse(content.ReadAsStringAsync().Result);
             Response = xdoc.Element("response");
         }
     }

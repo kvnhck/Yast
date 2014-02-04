@@ -1,4 +1,4 @@
-using System.Net.Http;
+using System.Xml.Linq;
 using YastLib.Common;
 
 namespace YastLib.Auth
@@ -10,8 +10,8 @@ namespace YastLib.Auth
             get { return Response.GetElementValue("hash", string.Empty); }
         }
 
-        public LoginResponse(HttpContent content)
-            : base(content)
+        public LoginResponse(XContainer xdoc)
+            : base(xdoc)
         {
         }
     }

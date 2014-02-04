@@ -1,5 +1,5 @@
 using System;
-using System.Net.Http;
+using System.Xml.Linq;
 using YastLib.Common;
 
 namespace YastLib.User
@@ -26,8 +26,8 @@ namespace YastLib.User
             get { return Response.GetElementValue("subscription", 0) == 1; }
         }
 
-        public GetInfoResponse(HttpContent content)
-            : base(content)
+        public GetInfoResponse(XContainer xdoc)
+            : base(xdoc)
         {
         }
     }

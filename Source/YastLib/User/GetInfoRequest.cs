@@ -6,8 +6,8 @@ namespace YastLib.User
     {
         public override string RequestType { get { return "user.getInfo"; } }
 
-        public GetInfoRequest(string user, string hash)
-            : base(user, hash)
+        public GetInfoRequest(YastAuthToken token)
+            : base(token.User, token.Hash)
         {   
         }
     }

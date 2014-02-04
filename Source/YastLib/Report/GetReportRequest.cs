@@ -17,8 +17,8 @@ namespace YastLib.Report
         public IList<string> GroupBy { get; set; }
         public IList<string> Constraints { get; set; }
 
-        public GetReportRequest(string user, string hash, string reportFormat)
-            : base(user, hash)
+        public GetReportRequest(YastAuthToken token, string reportFormat)
+            : base(token.User, token.Hash)
         {
             ReportFormat = reportFormat;
 
@@ -31,6 +31,9 @@ namespace YastLib.Report
         public override XDocument ToXml()
         {
             var xml = base.ToXml();
+
+            if (xml.Root == null)
+                throw new Exception("XDocument.Root element is missing");
 
             xml.Root.Add(new XElement("reportFormat", ReportFormat));
             

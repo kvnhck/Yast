@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
+using System.Xml.Linq;
 using YastLib.Common;
 
 namespace YastLib.Data
 {
-    public class GetRecordsResponse : YastResponse
+    public class GetRecordsResponse : YastCollectionResponse
     {
         private IEnumerable<YastRecord> _records;
         public IEnumerable<YastRecord> Records
@@ -13,18 +13,14 @@ namespace YastLib.Data
             get { return _records ?? (_records = GetRecords()); }
         }
 
-        public GetRecordsResponse(HttpContent content)
-            : base(content)
+        public GetRecordsResponse(XContainer xdoc)
+            : base(xdoc)
         {
         }
 
         private IEnumerable<YastRecord> GetRecords()
         {
-            var xObjects = Response.Element("objects");
-            if (xObjects == null) yield break;
-            
-            foreach (var record in xObjects.Elements("record").Select(YastRecord.ConvertFrom))
-                yield return record;
+            return GetObjects("record").Select(o => (YastRecord) o);
         } 
     }
 }

@@ -1,6 +1,6 @@
 using System;
-using System.Net.Http;
 using System.Web;
+using System.Xml.Linq;
 using YastLib.Common;
 
 namespace YastLib.Report
@@ -22,20 +22,20 @@ namespace YastLib.Report
             get { return Response.GetElementValue("fileType", string.Empty); }
         }
 
-        public GetReportResponse(HttpContent content)
-            : base(content)
+        public GetReportResponse(XContainer xdoc)
+            : base(xdoc)
         {
         }
 
-        public Uri GetDownloadUrl(Uri baseUri, string user, string hash)
+        public Uri GetDownloadUrl(Uri baseUri, YastAuthToken token)
         {
             return new Uri(
                 baseUri,
                 string.Format("/file.php?type=report&id={0}&hash={1}&user={2}&userhash={3}",
                     ReportId,
                     ReportHash,
-                    HttpUtility.UrlEncode(user),
-                    hash));
+                    HttpUtility.UrlEncode(token.User),
+                    token.Hash));
         }
     }
 }

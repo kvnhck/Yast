@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace YastLib.Common
 {
-    public class YastFolder : YastElement
+    public class YastProject : YastElement
     {
         public string Name
         {
@@ -40,14 +40,14 @@ namespace YastLib.Common
             get { return _element.GetElementValue("creator", 0); }
         }
 
-        public YastFolder(XElement folder)
-            : base(folder)
+        public YastProject(XElement project)
+            : base(project)
         {
         }
 
-        public static explicit operator YastFolder(XElement folder)
+        public static explicit operator YastProject(XElement project)
         {
-            return new YastFolder(folder);
+            return new YastProject(project);
         }
     }
 }
