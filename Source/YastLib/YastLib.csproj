@@ -76,6 +76,8 @@
   <ItemGroup>
     <Compile Include="Auth\LoginRequest.cs" />
     <Compile Include="Auth\LoginResponse.cs" />
+    <Compile Include="Common\YastPhonecallRecord.cs" />
+    <Compile Include="Common\YastWorkRecord.cs" />
     <Compile Include="Common\YastAuthToken.cs" />
     <Compile Include="Common\YastCollectionResponse.cs" />
     <Compile Include="Common\YastElement.cs" />
@@ -102,8 +104,6 @@
     <Compile Include="Data\GetProjectsResponse.cs" />
     <Compile Include="Data\GetRecordsRequest.cs" />
     <Compile Include="Data\GetRecordsResponse.cs" />
-    <Compile Include="Data\PhonecallRecord.cs" />
-    <Compile Include="Data\WorkRecord.cs" />
     <Compile Include="IYastClient.cs" />
     <Compile Include="Meta\GetRecordTypesRequest.cs" />
     <Compile Include="Meta\GetRecordTypesResponse.cs" />

@@ -14,7 +14,7 @@ namespace YastLib.Test
     {
         private const string BaseUri = "http://www.yast.com";
 
-        private YastClient _yast;
+        private IYastClient _yast;
         private string _user;
         private string _password;
 
@@ -83,7 +83,7 @@ namespace YastLib.Test
             
             Console.WriteLine("Records:");
             Console.WriteLine(string.Join(Environment.NewLine,
-                response.Records.OfType<WorkRecord>().Select(r => string.Format("{0}: {1} - {2} ({3})", r.Id, r.StartTime, r.EndTime, r.GetType().Name))));
+                response.Records.OfType<YastWorkRecord>().Select(r => string.Format("{0}: {1} - {2} ({3})", r.Id, r.StartTime, r.EndTime, r.GetType().Name))));
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace YastLib.Test
             var projectId = projects.Projects.First().Id;
 
             var response = _yast.AddRecords(token,
-                new WorkRecord
+                new YastWorkRecord
                 {
                     StartTime = DateTime.Now.AddHours(-1),
                     EndTime = DateTime.Now.AddHours(1),

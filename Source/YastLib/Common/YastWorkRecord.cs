@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Xml.Linq;
-using YastLib.Common;
 
-namespace YastLib.Data
+namespace YastLib.Common
 {
-    public class WorkRecord : YastRecord
+    public class YastWorkRecord : YastRecord
     {
         public DateTime StartTime
         {
@@ -42,12 +41,12 @@ namespace YastLib.Data
             set { SetVariableValue(3, value ? "1" : "0"); }
         }
 
-        public WorkRecord(XElement record)
+        public YastWorkRecord(XElement record)
             : base(record)
         {
         }
 
-        public WorkRecord()
+        public YastWorkRecord()
         {
             TypeId = 1;
 

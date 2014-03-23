@@ -91,8 +91,8 @@ namespace YastLib.Common
 
             switch (typeId)
             {
-                case 1: return new WorkRecord(record);
-                case 3: return new PhonecallRecord(record);
+                case 1: return new YastWorkRecord(record);
+                case 3: return new YastPhonecallRecord(record);
                 default: return new YastRecord(record);
             }
         }

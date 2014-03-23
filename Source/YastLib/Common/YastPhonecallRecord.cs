@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Xml.Linq;
-using YastLib.Common;
 
-namespace YastLib.Data
+namespace YastLib.Common
 {
-    public class PhonecallRecord : YastRecord
+    public class YastPhonecallRecord : YastRecord
     {
         public DateTime StartTime
         {
@@ -54,12 +53,12 @@ namespace YastLib.Data
             set { SetVariableValue(5, value ? "1" : "0"); }
         }
 
-        public PhonecallRecord(XElement record)
+        public YastPhonecallRecord(XElement record)
             : base(record)
         {
         }
 
-        public PhonecallRecord()
+        public YastPhonecallRecord()
         {
             TypeId = 3;
 
