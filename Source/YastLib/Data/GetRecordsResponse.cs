@@ -20,7 +20,7 @@ namespace YastLib.Data
 
         private IEnumerable<YastRecord> GetRecords()
         {
-            return GetObjects("record").Select(o => (YastRecord) o);
+            return GetElements("record").Select(o => (YastRecord) o);
         } 
     }
 }

@@ -2,11 +2,11 @@ using YastLib.Common;
 
 namespace YastLib.User
 {
-    public class GetInfoRequest : YastRequest
+    public class GetUserInfoRequest : YastRequest
     {
         public override string RequestType { get { return "user.getInfo"; } }
 
-        public GetInfoRequest(YastAuthToken token)
+        public GetUserInfoRequest(YastAuthToken token)
             : base(token.User, token.Hash)
         {   
         }

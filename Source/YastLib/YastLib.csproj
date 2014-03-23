@@ -112,8 +112,10 @@
     <Compile Include="Report\GetReportRequest.cs" />
     <Compile Include="Report\GetReportResponse.cs" />
     <Compile Include="Report\ReportGrouping.cs" />
-    <Compile Include="User\GetInfoRequest.cs" />
-    <Compile Include="User\GetInfoResponse.cs" />
+    <Compile Include="User\GetUserInfoRequest.cs" />
+    <Compile Include="User\GetUserInfoResponse.cs" />
+    <Compile Include="User\GetUserSettingsRequest.cs" />
+    <Compile Include="User\GetUserSettingsResponse.cs" />
     <Compile Include="YastClient.cs" />
   </ItemGroup>
   <ItemGroup>

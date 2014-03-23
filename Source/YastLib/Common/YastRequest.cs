@@ -44,8 +44,6 @@ namespace YastLib.Common
 
             var request = ToXml().ToString(SaveOptions.DisableFormatting);
 
-            Trace.TraceInformation(request);
-            
             values.Add("request", request);
 
             return new FormUrlEncodedContent(values);

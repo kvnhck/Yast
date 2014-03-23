@@ -20,7 +20,7 @@ namespace YastLib.Data
 
         private IEnumerable<YastProject> GetProjects()
         {
-            return GetObjects("project").Select(o => (YastProject) o);
+            return GetElements("project").Select(o => (YastProject) o);
         }
     }
 }

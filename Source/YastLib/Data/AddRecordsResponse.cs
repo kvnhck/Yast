@@ -16,9 +16,9 @@ namespace YastLib.Data
         public AddRecordsResponse(XContainer xdoc)
             : base(xdoc)
         {
-            Records = GetObjects("record").Select(x => (YastRecord) x);
-            Projects = GetObjects("project").Select(x => (YastProject) x);
-            Folders = GetObjects("folder").Select(x => (YastFolder) x);
+            Records = GetElements("record").Select(x => (YastRecord) x);
+            Projects = GetElements("project").Select(x => (YastProject) x);
+            Folders = GetElements("folder").Select(x => (YastFolder) x);
         }
     }
 }

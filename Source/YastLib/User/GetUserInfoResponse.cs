@@ -4,7 +4,7 @@ using YastLib.Common;
 
 namespace YastLib.User
 {
-    public class GetInfoResponse : YastResponse
+    public class GetUserInfoResponse : YastResponse
     {
         public int Id
         {
@@ -26,7 +26,7 @@ namespace YastLib.User
             get { return Response.GetElementValue("subscription", 0) == 1; }
         }
 
-        public GetInfoResponse(XContainer xdoc)
+        public GetUserInfoResponse(XContainer xdoc)
             : base(xdoc)
         {
         }

@@ -18,13 +18,20 @@ namespace YastLib.Test
             Assert.AreEqual(Status.Success, response.Status);
         }
 
-        public static void AssertResponse(GetInfoResponse response)
+        public static void AssertResponse(GetUserInfoResponse response)
         {
             AssertResponse((YastResponse) response);
 
             Assert.IsNotEmpty(response.Name);
             Assert.Greater(response.TimeCreated, new DateTime(1970, 1, 1));
             Assert.Greater(response.Id, 0);
+        }
+
+        public static void AssertResponse(GetUserSettingsResponse response)
+        {
+            AssertResponse((YastResponse) response);
+
+            CollectionAssert.IsNotEmpty(response.Settings);
         }
 
         public static void AssertResponse(GetRecordsResponse response)

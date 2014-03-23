@@ -10,12 +10,12 @@ namespace YastLib.Common
         {
         }
 
-        protected IEnumerable<XElement> GetObjects(string elementName)
+        protected IEnumerable<XElement> GetElements(string elementName, string collectionElement = "objects")
         {
-            var xObjects = Response.Element("objects");
-            if (xObjects == null) yield break;
+            var collection = Response.Element(collectionElement);
+            if (collection == null) yield break;
 
-            foreach (var element in xObjects.Elements(elementName))
+            foreach (var element in collection.Elements(elementName))
                 yield return element;
         }
     }

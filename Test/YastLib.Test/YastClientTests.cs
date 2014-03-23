@@ -73,6 +73,19 @@ namespace YastLib.Test
         }
 
         [Test]
+        public void GetUserSettings_ShouldRespondWithUserSettings()
+        {
+            var token = Login();
+
+            var response = _yast.GetUserSettings(token);
+
+            YastAssert.AssertResponse(response);
+
+            Console.WriteLine("Settings:");
+            Console.WriteLine(string.Join(Environment.NewLine, response.Settings.Select(s => s.Key + ": " + s.Value)));
+        }
+
+        [Test]
         public void GetRecords_ShouldReturnRecords()
         {
             var token = Login();

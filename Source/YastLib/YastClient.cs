@@ -53,13 +53,22 @@ namespace YastLib
             return new LoginResponse(response);
         }
 
-        public GetInfoResponse GetUserInfo(YastAuthToken token, int? requestId = null)
+        public GetUserInfoResponse GetUserInfo(YastAuthToken token, int? requestId = null)
         {
-            var request = new GetInfoRequest(token) { RequestId = requestId };
+            var request = new GetUserInfoRequest(token) { RequestId = requestId };
             
             var response = Post(request);
 
-            return new GetInfoResponse(response);
+            return new GetUserInfoResponse(response);
+        }
+
+        public GetUserSettingsResponse GetUserSettings(YastAuthToken token)
+        {
+            var request = new GetUserSettingsRequest(token);
+
+            var response = Post(request);
+
+            return new GetUserSettingsResponse(response);
         }
 
         public GetRecordsResponse GetRecords(YastAuthToken token,
