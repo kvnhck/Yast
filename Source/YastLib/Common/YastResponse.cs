@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace YastLib.Common
@@ -19,6 +20,8 @@ namespace YastLib.Common
         protected YastResponse(XContainer xdoc)
         {
             Response = xdoc.Element("response");
+
+            Trace.TraceInformation(Response.ToString(SaveOptions.DisableFormatting));
         }
     }
 }

@@ -90,6 +90,12 @@
     <Compile Include="Common\YastTime.cs" />
     <Compile Include="Common\XElementExtensions.cs" />
     <Compile Include="Common\YastVariableType.cs" />
+    <Compile Include="Data\AddRecordsRequest.cs" />
+    <Compile Include="Data\AddRecordsResponse.cs" />
+    <Compile Include="Data\ChangeRecordsRequest.cs" />
+    <Compile Include="Data\ChangeRecordsResponse.cs" />
+    <Compile Include="Data\DeleteRecordsRequest.cs" />
+    <Compile Include="Data\DeleteRecordsResponse.cs" />
     <Compile Include="Data\GetFoldersRequest.cs" />
     <Compile Include="Data\GetFoldersResponse.cs" />
     <Compile Include="Data\GetProjectsRequest.cs" />
@@ -98,6 +104,7 @@
     <Compile Include="Data\GetRecordsResponse.cs" />
     <Compile Include="Data\PhonecallRecord.cs" />
     <Compile Include="Data\WorkRecord.cs" />
+    <Compile Include="IYastClient.cs" />
     <Compile Include="Meta\GetRecordTypesRequest.cs" />
     <Compile Include="Meta\GetRecordTypesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

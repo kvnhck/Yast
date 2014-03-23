@@ -6,7 +6,7 @@ namespace YastLib.Common
     {
         public string Name
         {
-            get { return _element.GetElementValue("name", string.Empty); }
+            get { return Element.GetElementValue("name", string.Empty); }
         }
 
         public YastVariableType(XElement variableType)

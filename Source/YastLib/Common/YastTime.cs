@@ -6,14 +6,14 @@ namespace YastLib.Common
     {
         static readonly DateTime BaseTime = new DateTime(1970, 1, 1);
 
-        public static double ToSecondsSince1970(DateTime time)
+        public static long ToSecondsSince1970(DateTime time)
         {
-            return (time - BaseTime).TotalSeconds;
+            return (long) Math.Floor((time - BaseTime).TotalSeconds);
         }
 
         public static DateTime FromSecondsSince1970(double seconds)
         {
-            return new DateTime(1970, 1, 1).AddSeconds(seconds).ToLocalTime();
+            return new DateTime(1970, 1, 1).AddSeconds(seconds);
         }
     }
 }

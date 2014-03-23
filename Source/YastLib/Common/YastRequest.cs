@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Xml.Linq;
 
@@ -40,7 +41,12 @@ namespace YastLib.Common
         public HttpContent ToHttpContent()
         {
             var values = new Dictionary<string, string>();
-            values.Add("request", ToString());
+
+            var request = ToXml().ToString(SaveOptions.DisableFormatting);
+
+            Trace.TraceInformation(request);
+            
+            values.Add("request", request);
 
             return new FormUrlEncodedContent(values);
         }

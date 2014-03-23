@@ -12,7 +12,7 @@ using YastLib.User;
 
 namespace YastLib
 {
-    public class YastClient
+    public class YastClient : IYastClient
     {
         private readonly Uri _baseAddress;
 
@@ -115,6 +115,15 @@ namespace YastLib
             var response = Post(request);
 
             return new GetRecordTypesResponse(response);
+        }
+
+        public AddRecordsResponse AddRecords(YastAuthToken token, params YastElement[] records)
+        {
+            var request = new AddRecordsRequest(token, records);
+
+            var response = Post(request);
+
+            return new AddRecordsResponse(response);
         }
     }
 }

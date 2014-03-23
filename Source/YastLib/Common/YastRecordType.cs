@@ -8,7 +8,7 @@ namespace YastLib.Common
     {
         public string Name
         {
-            get { return _element.GetElementValue("name", string.Empty); }
+            get { return Element.GetElementValue("name", string.Empty); }
         }
 
         private IList<YastVariableType> _variableTypes;
@@ -25,7 +25,7 @@ namespace YastLib.Common
 
         private IList<YastVariableType> GetVariableTypes()
         {
-            var xVariableTypes = _element.Element("variableTypes");
+            var xVariableTypes = Element.Element("variableTypes");
             if (xVariableTypes == null) return new YastVariableType[0];
 
             return xVariableTypes.Elements("variableType")

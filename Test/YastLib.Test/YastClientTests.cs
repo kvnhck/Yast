@@ -38,8 +38,8 @@ namespace YastLib.Test
         {
             var response = _yast.Login(_user, _password);
 
-            Assert.IsNotNull(response);
-            Assert.AreEqual(Status.Success, response.Status);
+            YastAssert.AssertResponse(response);
+
             Assert.IsNotEmpty(response.Hash);
 
             Console.WriteLine("Login:");
@@ -60,19 +60,16 @@ namespace YastLib.Test
         {
             var token = Login();
 
-            var userInfo = _yast.GetUserInfo(token);
+            var response = _yast.GetUserInfo(token);
 
-            Assert.IsNotNull(userInfo);
-            Assert.IsNotEmpty(userInfo.Name);
-            Assert.Greater(userInfo.TimeCreated, new DateTime(1970, 1, 1));
-            Assert.Greater(userInfo.Id, 0);
-
+            YastAssert.AssertResponse(response);
+            
             Console.WriteLine("UserInfo:");
-            Console.WriteLine("Id: {0}", userInfo.Id);
-            Console.WriteLine("Name: {0}", userInfo.Name);
-            Console.WriteLine("Created: {0}", userInfo.TimeCreated);
-            Console.WriteLine("Status: {0}", userInfo.Status);
-            Console.WriteLine("ValidSubscription: {0}", userInfo.ValidSubscription);
+            Console.WriteLine("Id: {0}", response.Id);
+            Console.WriteLine("Name: {0}", response.Name);
+            Console.WriteLine("Created: {0}", response.TimeCreated);
+            Console.WriteLine("Status: {0}", response.Status);
+            Console.WriteLine("ValidSubscription: {0}", response.ValidSubscription);
         }
 
         [Test]
@@ -82,10 +79,8 @@ namespace YastLib.Test
 
             var response = _yast.GetRecords(token);
 
-            Assert.IsNotNull(response);
-            CollectionAssert.IsNotEmpty(response.Records);
-            Assert.IsTrue(response.Records.All(r => r.Id > 0));
-
+            YastAssert.AssertResponse(response);
+            
             Console.WriteLine("Records:");
             Console.WriteLine(string.Join(Environment.NewLine,
                 response.Records.OfType<WorkRecord>().Select(r => string.Format("{0}: {1} - {2} ({3})", r.Id, r.StartTime, r.EndTime, r.GetType().Name))));
@@ -98,8 +93,8 @@ namespace YastLib.Test
 
             var response = _yast.GetFolders(token);
 
-            Assert.IsNotNull(response);
-            CollectionAssert.IsNotEmpty(response.Folders);
+            YastAssert.AssertResponse(response);
+            
             Console.WriteLine("Folders:");
             Console.WriteLine(string.Join(Environment.NewLine,
                 response.Folders.Select(f => string.Format("{0}: {1} (parent: {2})", f.Id, f.Name, f.ParentId))));
@@ -112,9 +107,7 @@ namespace YastLib.Test
 
             var response = _yast.GetProjects(token);
 
-            Assert.IsNotNull(response);
-            CollectionAssert.IsNotEmpty(response.Projects);
-            Assert.IsTrue(response.Projects.All(p => p.Id > 0));
+            YastAssert.AssertResponse(response);
 
             Console.WriteLine("Projects:");
             Console.WriteLine(string.Join(Environment.NewLine,
@@ -126,14 +119,12 @@ namespace YastLib.Test
         {
             var token = Login();
 
-            var report = _yast.GetReport(token, ReportFormat.Pdf);
+            var response = _yast.GetReport(token, ReportFormat.Pdf);
 
-            Assert.IsNotNull(report);
-            Assert.Greater(report.ReportId, 0);
-            Assert.IsNotEmpty(report.ReportHash);
+            YastAssert.AssertResponse(response);
 
             Console.WriteLine(
-                report.GetDownloadUrl(new Uri(BaseUri), token));
+                response.GetDownloadUrl(new Uri(BaseUri), token));
         }
 
         [Test]
@@ -141,21 +132,17 @@ namespace YastLib.Test
         {
             var token = Login();
 
-            var report = _yast.GetReport(
+            var response = _yast.GetReport(
                 token,
                 ReportFormat.Pdf,
                 timeFrom: new DateTime(DateTime.Now.Year, 1, 1),
                 timeTo: DateTime.Now.AddDays(1).Date,
                 groupBy: new List<string> { ReportGrouping.Week });
 
-            Assert.IsNotNull(report);
-            Assert.Greater(report.ReportId, 0);
-            Assert.IsNotEmpty(report.ReportHash);
+            YastAssert.AssertResponse(response);
 
             Console.WriteLine(
-                report.GetDownloadUrl(
-                    new Uri(BaseUri),
-                    token));
+                response.GetDownloadUrl(new Uri(BaseUri), token));
         }
 
         [Test]
@@ -165,14 +152,98 @@ namespace YastLib.Test
 
             var response = _yast.GetRecordTypes(token);
 
-            Assert.IsNotNull(response);
-            CollectionAssert.IsNotEmpty(response.RecordTypes);
-            Assert.IsTrue(response.RecordTypes.All(rt => rt.Id > 0));
+            YastAssert.AssertResponse(response);
 
             Console.WriteLine("RecordTypes:");
             foreach(var rt in response.RecordTypes)
                 Console.WriteLine("{0}: {1} ({2})", rt.Id, rt.Name,
                     string.Join(", ", rt.VariableTypes.Select(vt => vt.Name)));
+        }
+
+        [Test]
+        public void AddWorkRecord_ShouldCreateANewWorkRecord()
+        {
+            var token = Login();
+
+            var projects = _yast.GetProjects(token);
+            var projectId = projects.Projects.First().Id;
+
+            var response = _yast.AddRecords(token,
+                new WorkRecord
+                {
+                    StartTime = DateTime.Now.AddHours(-1),
+                    EndTime = DateTime.Now.AddHours(1),
+                    ProjectId = projectId,
+                    Comment = "Dit is een test comment"
+                });
+
+            YastAssert.AssertResponse(response);
+        }
+
+        [Test]
+        public void AddProjectRecord_ShouldCreateANewProjectRecord()
+        {
+            var token = Login();
+
+            var response = _yast.AddRecords(token,
+                new YastProject
+                {
+                    ParentId = 0,
+                    Name = "Test Project",
+                    PrimaryColor = "#DDDDDD",
+                    Description = "Test Project Description",
+                    Privileges = YastPrivilege.Owner
+                });
+
+            YastAssert.AssertResponse(response);
+        }
+
+        [Test]
+        public void AddFolderRecord_ShouldCreateANewFolderRecord()
+        {
+            var token = Login();
+
+            var response = _yast.AddRecords(token,
+                new YastFolder
+                {
+                    Name = "Test Folder",
+                    Description = "Test Folder Description",
+                    ParentId = 0,
+                    PrimaryColor = "#DDDDDD",
+                    Privileges = YastPrivilege.Owner
+                });
+
+            YastAssert.AssertResponse(response);
+        }
+
+        [Test]
+        public void AddSubFolderRecord_ShouldCreateANewFolderRecord()
+        {
+            var token = Login();
+
+            var response = _yast.AddRecords(token,
+                new YastFolder
+                {
+                    Name = "Test Folder",
+                    Description = "Test Folder Description",
+                    ParentId = 0,
+                    PrimaryColor = "#DDDDDD",
+                    Privileges = YastPrivilege.Owner
+                });
+
+            var folderId = response.Folders.First().Id;
+
+            response = _yast.AddRecords(token,
+                new YastFolder
+                {
+                    Name = "Test Subfolder",
+                    Description = "Test Subfolder Description",
+                    ParentId = folderId,
+                    PrimaryColor = "#DDDDDD",
+                    Privileges = YastPrivilege.Owner
+                });
+
+            YastAssert.AssertResponse(response);
         }
     }
 }
